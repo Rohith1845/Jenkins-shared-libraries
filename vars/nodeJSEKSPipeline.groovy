@@ -2,12 +2,12 @@ def call(Map configMap){
         pipeline {
         // These are pre-build sections
         agent {
-            tools{
-                nodejs 'node20'
-            }
             node {
                 label 'Agent-1'
             }
+        }
+        tools{
+            nodejs 'node20'
         }
         environment {
             COURSE = "Jenkins"
