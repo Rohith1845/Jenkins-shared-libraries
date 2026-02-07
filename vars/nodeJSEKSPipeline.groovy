@@ -32,7 +32,7 @@ def call(Map configMap){
                 steps {
                     script{
                         sh """
-                            echo "npm install"
+                            npm install
                         """
                     }
                 }
