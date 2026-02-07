@@ -32,8 +32,7 @@ def call(Map configMap){
                 steps {
                     script{
                         sh """
-                            export PATH=/usr/bin:/usr/local/bin:\$PATH
-                            npm install
+                            echo "npm install"
                         """
                     }
                 }
