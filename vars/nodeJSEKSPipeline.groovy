@@ -2,6 +2,9 @@ def call(Map configMap){
         pipeline {
         // These are pre-build sections
         agent {
+            tools{
+                nodejs 'node20'
+            }
             node {
                 label 'Agent-1'
             }
