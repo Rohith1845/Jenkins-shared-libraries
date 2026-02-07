@@ -143,6 +143,16 @@ def call(Map configMap){
             //     }
             // }
 
+            stage('Terraform init'){
+                steps{
+                    script {
+                        sh """
+                            terraform version
+                        """
+                    }
+                }
+            }
+
         }
         post{
             always{
