@@ -8,6 +8,7 @@ def call(Map configMap){
         }
         tools{
             nodejs 'node20'
+            terraform 'terraform-1.5'
         }
         environment {
             COURSE = "Jenkins"
