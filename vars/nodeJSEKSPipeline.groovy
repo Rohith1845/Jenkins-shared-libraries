@@ -21,6 +21,10 @@ def call(Map configMap){
             timeout(time: 10, unit: 'MINUTES') 
             disableConcurrentBuilds()
         }
+        parameters {
+            string(name: 'appVersion', description: 'Which app version want to deploy')
+            string(name: 'deploy_to', choices: ['dev' , 'qa' , 'prod'], description: 'Pick the environment')
+        }
         // This is build section
         stages {
             stage('Read Version') {
@@ -143,13 +147,16 @@ def call(Map configMap){
             //         }
             //     }
             // }
-
-            stage('Terraform init'){
-                steps{
+            stage('Trigger SG'){
+                steps {
                     script {
-                        sh """
-                            terraform version
-                        """
+                        build job: "../${component}-deploy",
+                        wait: false
+                        propagate: false
+                        parameters: [
+                            string(name: 'appVersion' , value: "${appVersion}"),
+                            string(name: 'deploy_to' , value: "dev")
+                        ]
                     }
                 }
             }
