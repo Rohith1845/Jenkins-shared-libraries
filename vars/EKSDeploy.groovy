@@ -27,9 +27,11 @@
                 script{
                     withAWS(region:'us-east-1',credentials:'aws-creds'){
                         sh """
+                            set -e
                             aws eks update-kubeconfig --region ${REGION} --name ${project}-${deploy_to}
                             kubectl get nodes
-                            echo "${deploy_to}, ${appVersion}"
+                            sed -i "/IMAGE_VERSION/${appVersion}/g" values.yaml
+                            helm upgrade --install ${component} -f values-${deploy_to} -n ${project} --atomic --wait --timeout=5m .
                         """
                     }
                 }
