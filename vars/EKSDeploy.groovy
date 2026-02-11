@@ -31,6 +31,14 @@
                             aws eks update-kubeconfig --region ${REGION} --name ${project}-${deploy_to}
                             kubectl get nodes
                             sed -i "s/IMAGE_VERSION/${appVersion}/g" values.yaml
+
+                            aws ecr get-login-password --region us-east-1 | \\
+                            kubectl create secret docker-registry ecr-creds \\
+                                --docker-server=376798132299.dkr.ecr.us-east-1.amazonaws.com \\
+                                --docker-username=AWS \\
+                                --docker-password-stdin \\
+                                -n ${project} --dry-run=client -o yaml | kubectl apply -f -
+
                             helm upgrade --install ${component} \
                             -f values-${deploy_to}.yaml \
                             -n ${project} \
