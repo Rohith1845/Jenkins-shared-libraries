@@ -32,7 +32,7 @@
                             kubectl get nodes
                             sed -i "s/IMAGE_VERSION/${appVersion}/g" values.yaml
                             helm upgrade --install ${component} \
-                            -f values-dev.yaml \
+                            -f values-${deploy_to}.yaml \
                             -n ${project} \
                             --wait \
                             --timeout=5m \
