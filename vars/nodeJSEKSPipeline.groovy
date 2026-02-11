@@ -6,14 +6,10 @@ def call(Map configMap){
                 label 'Agent-1'
             }
         }
-        tools{
-            nodejs 'node20'
-            terraform 'terraform-1.5'
-        }
         environment {
             COURSE = "Jenkins"
             appVersion = ""
-            ACC_ID = "376798132299"
+            ACC_ID = "131315333865"
             PROJECT = configMap.get("project")
             COMPONENT = configMap.get("component")
         }
@@ -21,10 +17,10 @@ def call(Map configMap){
             timeout(time: 10, unit: 'MINUTES') 
             disableConcurrentBuilds()
         }
-        parameters {
-            string(name: 'appVersion', description: 'Which app version want to deploy')
-            string(name: 'deploy_to', choices: ['dev' , 'qa' , 'prod'], description: 'Pick the environment')
-        }
+        // parameters {
+        //     string(name: 'appVersion', description: 'Which app version want to deploy'),
+        //     string(name: 'deploy_to', choices: ['dev' , 'qa' , 'prod'], description: 'Pick the environment')
+        // }
         // This is build section
         stages {
             stage('Read Version') {

@@ -9,7 +9,7 @@
     environment {
         COURSE = "Jenkins"
         appVersion = configMap.get("appVersion")
-        ACC_ID = "376798132299"
+        ACC_ID = "131315333865"
         project = configMap.get("project")
         component = configMap.get("component")
         deploy_to = configMap.get("deploy_to")
