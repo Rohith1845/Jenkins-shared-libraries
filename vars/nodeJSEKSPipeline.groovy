@@ -154,7 +154,7 @@ def call(Map configMap){
             stage('Trigger SG'){
                 steps {
                     script {
-                        build job: "../k8-components-deploy/${component}-deploy",
+                        build job: "k8-components-deploy/${component}-deploy",
                         wait: false
                         propagate: false
                         parameters: [
