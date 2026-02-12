@@ -159,10 +159,10 @@ def call(Map configMap){
                         build job: "k8-components-deploy/${component}-deploy",
                             wait: false,
                             propagate: false
-                        parameters: [
-                            string(name: 'appVersion' , value: "${appVersion}"),
-                            string(name: 'deploy_to' , value: "dev")
-                        ]
+                            parameters: [
+                                string(name: 'appVersion' , value: "${appVersion}"),
+                                string(name: 'deploy_to' , value: "dev")
+                            ]
                     }
                 }
             }
