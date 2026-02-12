@@ -26,7 +26,7 @@ def call(Map configMap){
             stage('Read Version') {
                 steps {
                     script{
-                        dir('user'){
+                        dir("${component}"){
                             def packageJSON = readJSON file: 'package.json'
                             appVersion = packageJSON.version
                             echo "app version: ${appVersion}"
@@ -37,18 +37,22 @@ def call(Map configMap){
             stage('Install Dependencies') {
                 steps {
                     script{
-                        sh """
-                            npm install
-                        """
+                        dir("${component}") {
+                            sh """
+                                npm install
+                            """
+                        }
                     }
                 }
             }
             stage('Unit Test') {
                 steps {
                     script{
-                        sh """
-                            npm test
-                        """
+                        dir("${component}"){
+                            sh """
+                                npm test
+                            """
+                        }
                     }
                 }
             }
