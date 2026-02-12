@@ -30,8 +30,6 @@
                             set -e
                             aws eks update-kubeconfig --region ${REGION} --name ${project}-${deploy_to}
                             kubectl get nodes
-                            // sed -i "s/IMAGE_VERSION/${appVersion}/g" values.yaml
-                            // helm upgrade --install ${component} -f values-${deploy_to}.yaml -n ${project} --atomic --wait --timeout=5m --rollback-on-failure .
                         """
                     }
                 }
