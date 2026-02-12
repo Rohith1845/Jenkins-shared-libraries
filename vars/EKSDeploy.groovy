@@ -26,13 +26,15 @@
             steps {
                 script{
                     withAWS(region:'us-east-1',credentials:'aws-creds'){
-                        sh """
-                            set -e
-                            aws eks update-kubeconfig --region ${REGION} --name ${project}-${deploy_to}
-                            kubectl get nodes
-                            sed -i "s/IMAGE_VERSION/${appVersion}/g" values.yaml
-                            helm upgrade --install ${component} -f values-${deploy_to}.yaml -n ${project} --atomic --wait --timeout=5m .
-                        """
+                        dir("${component}-deploy") {
+                            sh """
+                                set -e
+                                aws eks update-kubeconfig --region ${REGION} --name ${project}-${deploy_to}
+                                kubectl get nodes
+                                sed -i "s/IMAGE_VERSION/${appVersion}/g" values.yaml
+                                helm upgrade --install ${component} -f values-${deploy_to}.yaml -n ${project} --atomic --wait --timeout=5m .
+                            """
+                        }
                     }
                 }
             }
