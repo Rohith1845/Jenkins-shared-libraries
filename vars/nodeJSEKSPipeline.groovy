@@ -8,7 +8,7 @@ def call(Map configMap){
         }
         environment {
             COURSE = "Jenkins"
-            appVersion = ""
+            def appVersion = ""
             ACC_ID = "131315333865"
             PROJECT = configMap.get("project")
             COMPONENT = configMap.get("component")
