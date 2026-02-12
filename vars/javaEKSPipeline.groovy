@@ -26,9 +26,11 @@ def call(Map configMap){
             stage('Read Version') {
                 steps {
                     script{
-                        def pom = readMavenPom file: 'pom.xml'
-                        appVersion = pom.version
-                        echo "appVersion: ${appVersion}"
+                        dir("${component}") {
+                            def pom = readMavenPom file: 'pom.xml'
+                            appVersion = pom.version
+                            echo "appVersion: ${appVersion}"
+                        }
                     }
                 }
             }
