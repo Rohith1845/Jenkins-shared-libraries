@@ -8,7 +8,7 @@ def call(Map configMap){
         }
         environment {
             COURSE = "Jenkins"
-            appVersion = ""
+            def appVersion = ""
             ACC_ID = "131315333865"
             PROJECT = configMap.get("project")
             COMPONENT = configMap.get("component")
@@ -26,26 +26,32 @@ def call(Map configMap){
             stage('Read Version') {
                 steps {
                     script{
-                        appVersion = readFile(file: 'version')
-                        echo "app version: ${appVersion}"
+                        dir("${component}"){
+                            appVersion = readFile(file: 'version')
+                            echo "app version: ${appVersion}"
+                        }
                     }
                 }
             }
             stage('Install Dependencies') {
                 steps {
                     script{
-                        sh """
-                            pip3 install -r requirements.txt
-                        """
+                        dir("${component}"){
+                            sh """
+                                pip3 install -r requirements.txt
+                            """
+                        }
                     }
                 }
             }
             stage('Unit Test') {
                 steps {
                     script{
-                        sh """
-                            echo test
-                        """
+                        dir("${component}"){
+                            sh """
+                                echo test
+                            """
+                        }
                     }
                 }
             }
@@ -73,12 +79,14 @@ def call(Map configMap){
                 steps {
                     script{
                         withAWS(region:'us-east-1',credentials:'aws-creds') {
-                            sh """
-                                aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
-                                docker build -t ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion} .
-                                docker images
-                                docker push ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
-                            """
+                            dir("${component}"){
+                                sh """
+                                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
+                                    docker build -t ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion} .
+                                    docker images
+                                    docker push ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
+                                """
+                            }
                         }
                     }
                 }
@@ -145,7 +153,7 @@ def call(Map configMap){
             stage('Trigger SG'){
                 steps {
                     script {
-                        build job: "../${component}-deploy",
+                        build job: "Roboshop/${component}-deploy",
                             wait: false,
                             propagate: false
                             parameters: [
