@@ -1,7 +1,8 @@
     def call (Map configMap){
+        def appVersion = configMap.get("appVersion")
         pipeline {
     // These are pre-build sections
-    def appVersion = configMap.get("appVersion")
+    
     agent {
         node {
             label 'Agent-1'
