@@ -29,6 +29,7 @@ def call(Map configMap){
                     script{
                         dir("${component}"){
                             appVersion = readFile(file: 'version').trim()
+                            echo "TRIMMED VERSION -> '${appVersion}'"
                             echo "app version: ${appVersion}"
                         }
                     }
