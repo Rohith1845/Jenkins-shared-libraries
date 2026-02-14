@@ -1,5 +1,5 @@
 def call(Map configMap){
-        def appVersion = ""
+        
         pipeline {
         // These are pre-build sections
         agent {
@@ -9,7 +9,7 @@ def call(Map configMap){
         }
         environment {
             COURSE = "Jenkins"
-            
+            def appVersion = ""
             ACC_ID = "131315333865"
             PROJECT = configMap.get("project")
             COMPONENT = configMap.get("component")
@@ -157,7 +157,7 @@ def call(Map configMap){
                     script {
                         build job: "Roboshop/${component}-deploy",
                             wait: false,
-                            propagate: false
+                            propagate: false,
                             parameters: [
                                 string(name: 'appVersion' , value: "${appVersion}"),
                                 string(name: 'deploy_to' , value: "dev")
