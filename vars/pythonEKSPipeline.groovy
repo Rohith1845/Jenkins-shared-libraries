@@ -28,7 +28,7 @@ def call(Map configMap){
                 steps {
                     script{
                         dir("${component}"){
-                            appVersion = readFile(file: 'version')
+                            appVersion = readFile(file: 'version').trim()
                             echo "app version: ${appVersion}"
                         }
                     }
