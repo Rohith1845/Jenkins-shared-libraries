@@ -1,6 +1,7 @@
     def call (Map configMap){
         pipeline {
     // These are pre-build sections
+    def appVersion = configMap.get("appVersion")
     agent {
         node {
             label 'Agent-1'
@@ -8,7 +9,7 @@
     }
     environment {
         COURSE = "Jenkins"
-        def appVersion = configMap.get("appVersion")
+        
         ACC_ID = "131315333865"
         project = configMap.get("project")
         component = configMap.get("component")
