@@ -1,5 +1,9 @@
     def call (Map configMap){
         def appVersion = configMap.get("appVersion")
+        def project = configMap.get("project")
+        def component = configMap.get("component")
+        def deploy_to = configMap.get("deploy_to")
+
         pipeline {
     // These are pre-build sections
     
@@ -12,9 +16,6 @@
         COURSE = "Jenkins"
         
         ACC_ID = "131315333865"
-        project = configMap.get("project")
-        component = configMap.get("component")
-        deploy_to = configMap.get("deploy_to")
         REGION = "us-east-1"
     }
     options {
@@ -35,6 +36,7 @@
                                 kubectl get nodes
                                 sed -i "s/IMAGE_VERSION/${appVersion}/g" values.yaml
                                 helm upgrade --install ${component} -f values-${deploy_to}.yaml -n ${project} --atomic --wait --timeout=5m .
+                                
                             """
                         }
                     }
