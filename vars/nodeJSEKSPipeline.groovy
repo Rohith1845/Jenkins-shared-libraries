@@ -8,7 +8,7 @@ def call(Map configMap){
         }
         environment {
             COURSE = "Jenkins"
-            def appVersion = ""
+            appVersion = ""
             ACC_ID = "153402910823"
             PROJECT = configMap.get("project")
             COMPONENT = configMap.get("component")
@@ -154,7 +154,7 @@ def call(Map configMap){
             stage('Trigger SG'){
                 steps {
                     script {
-                        build job: "Roboshop/${configMap.component}-deploy",
+                        build job: "Roboshop/${component}-deploy",
                             wait: false,
                             propagate: false,
                             parameters: [
