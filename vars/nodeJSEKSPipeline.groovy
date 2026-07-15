@@ -1,4 +1,5 @@
 def call(Map configMap){
+        def appVersion = ""
         pipeline {
         // These are pre-build sections
         agent {
