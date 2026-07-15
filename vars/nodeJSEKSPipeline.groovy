@@ -154,7 +154,7 @@ def call(Map configMap){
             stage('Trigger SG'){
                 steps {
                     script {
-                        build job: "roboshop/${component}-deploy",
+                        build job: "Roboshop/${component}-deploy",
                             wait: false,
                             propagate: false,
                             parameters: [
