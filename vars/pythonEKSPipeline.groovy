@@ -29,7 +29,7 @@ def call(Map configMap){
                 steps {
                     script{
                         dir("${component}"){
-                            appVersion = readFile(file: 'version').trim()
+                            appVersion = readFile(file: 'version').trim() + "-${env.BUILD_NUMBER}"
                             echo "TRIMMED VERSION -> '${appVersion}'"
                             echo "app version: ${appVersion}"
                         }
@@ -41,7 +41,10 @@ def call(Map configMap){
                     script{
                         dir("${component}"){
                             sh """
-                                pip3 install -r requirements.txt
+                                set -e
+                                python3 -m venv .venv
+                                . .venv/bin/activate
+                                pip install -r requirements.txt
                             """
                         }
                     }
