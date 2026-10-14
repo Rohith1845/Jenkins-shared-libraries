@@ -1,5 +1,6 @@
 def call(Map configMap){
         def appVersion = ""
+        def component = configMap.get("component")
         pipeline {
         // These are pre-build sections
         agent {
@@ -27,8 +28,8 @@ def call(Map configMap){
                 steps {
                     script{
                         dir("${component}"){
-                            def packageJSON = readJSON file: 'package.json'
-                            appVersion = packageJSON.version
+                            def packageJSON = readJSON file: 'package.json' 
+                            appVersion = "${packageJSON.version}-${env.BUILD_NUMBER}"
                             echo "app version: ${appVersion}"
                         }
                     }
