@@ -30,7 +30,7 @@ def call(Map configMap){
                     script{
                         dir("${component}") {
                             def pom = readMavenPom file: 'pom.xml'
-                            appVersion = pom.version
+                            appVersion = "${pom.version}-${env.BUILD_NUMBER}"
                             echo "appVersion: ${appVersion}"
                         }
                     }
