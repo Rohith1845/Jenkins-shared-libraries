@@ -19,7 +19,7 @@
         REGION = "us-east-1"
     }
     options {
-        timeout(time: 10, unit: 'MINUTES') 
+        timeout(time: 15, unit: 'MINUTES') 
         disableConcurrentBuilds()
     }
     // This is build section
@@ -35,7 +35,8 @@
                                 aws eks update-kubeconfig --region ${REGION} --name ${project}-${deploy_to}
                                 kubectl get nodes
                                 sed -i "s/IMAGE_VERSION/${appVersion}/g" values.yaml
-                                helm upgrade --install ${component} -f values-${deploy_to}.yaml -n ${project} -n roboshop --create-namespace --atomic --wait --timeout=10m .
+                                // helm upgrade --install ${component} -f values-${deploy_to}.yaml -n ${project} -n roboshop --create-namespace --atomic --wait --timeout=10m .
+                                helm upgrade --install ${component} -f values-${deploy_to}.yaml -n ${project} --create-namespace --atomic --wait --timeout=8m .
                                 
                             """
                         }
